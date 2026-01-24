@@ -1,0 +1,98 @@
+{
+  "project": {
+    "name": "jedco-dashboard-HT",
+    "description": "لوحة تحكم تحليل بيانات حافلات صالة الحج"
+  },
+  "permissions": {
+    "allowedTools": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(python*)",
+      "Bash(pip*)",
+      "Bash(git*)",
+      "Bash(ls*)",
+      "Bash(cd*)",
+      "Bash(mkdir*)",
+      "Bash(cat*)",
+      "Write(scripts/*)",
+      "Write(output/*)",
+      "Write(*.md)",
+      "Write(*.json)",
+      "Write(*.py)",
+      "Edit(scripts/*)",
+      "Edit(output/*)",
+      "Edit(*.md)",
+      "Edit(*.json)",
+      "Edit(*.py)"
+    ],
+    "deniedTools": [
+      "Write(input/*)",
+      "Edit(input/*)",
+      "Write(*.xlsx)",
+      "Edit(*.xlsx)",
+      "Bash(rm*JEDCO*)",
+      "Bash(del*JEDCO*)",
+      "Bash(move*JEDCO*)",
+      "Bash(*JEDCO_Fail_HT*)",
+      "Bash(*JEDCO_Tabel_Record*)"
+    ]
+  },
+  "paths": {
+    "protectedPaths": [
+      "C:/Users/pcpz1/Desktop/JEDCO_Fail_HT/",
+      "C:/Users/pcpz1/Desktop/JEDCO_Fail_HT/JEDCO_Tabel_Record/",
+      "input/"
+    ],
+    "writablePaths": [
+      "output/",
+      "scripts/",
+      "backups/",
+      "./"
+    ],
+    "sourceFile": {
+      "path": "C:/Users/pcpz1/Desktop/JEDCO_Fail_HT/JEDCO_Tabel_Record/JEDCO_HT.xlsx",
+      "sheet": "التسجيل",
+      "headerRow": 5,
+      "mode": "READ_ONLY"
+    }
+  },
+  "dataProtection": {
+    "rules": [
+      {
+        "id": "no-modify-source",
+        "description": "لا تعدل الملف الأصلي",
+        "pattern": "**/JEDCO_HT.xlsx",
+        "action": "DENY_WRITE"
+      },
+      {
+        "id": "no-write-input",
+        "description": "لا تكتب في مجلد input",
+        "pattern": "input/**",
+        "action": "DENY_WRITE"
+      },
+      {
+        "id": "no-delete-data",
+        "description": "لا تحذف ملفات البيانات",
+        "pattern": "**/*.xlsx",
+        "action": "DENY_DELETE"
+      }
+    ]
+  },
+  "scripts": {
+    "requiredImports": [
+      "pandas",
+      "openpyxl"
+    ],
+    "safePatterns": {
+      "readExcel": "pd.read_excel(..., engine='openpyxl')",
+      "saveOutput": "df.to_json(output_path, ...)"
+    },
+    "forbiddenPatterns": [
+      "to_excel.*JEDCO",
+      "open.*JEDCO.*[wa]",
+      "shutil.move.*JEDCO",
+      "os.remove.*JEDCO"
+    ]
+  }
+}
