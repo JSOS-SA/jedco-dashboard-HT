@@ -15,8 +15,12 @@ JEDCO Data Reader - قارئ بيانات JEDCO
 
 import json
 import sys
+import io
 from pathlib import Path
 from datetime import datetime
+
+# إصلاح ترميز Windows للعربية
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # =============================================================================
 # الإعدادات والثوابت
@@ -61,13 +65,13 @@ EXPECTED_COLUMNS = [
 def print_msg(msg, msg_type="info"):
     """طباعة رسالة بتنسيق موحد"""
     icons = {
-        "info": "ℹ️",
-        "success": "✅",
-        "warning": "⚠️",
-        "error": "❌",
-        "step": "📌"
+        "info": "[i]",
+        "success": "[OK]",
+        "warning": "[!]",
+        "error": "[X]",
+        "step": "[>]"
     }
-    icon = icons.get(msg_type, "•")
+    icon = icons.get(msg_type, "*")
     print(f"{icon} {msg}")
 
 
